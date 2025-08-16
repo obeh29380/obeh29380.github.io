@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-  <meta charset="UTF-8">
-  <title>こんぶまめホーム</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <title>こんぶまめホーム</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <h1 style="text-align: center;">こんぶまめホーム</h1>
     <div class="container">
@@ -17,16 +19,17 @@
             <figcaption>まめ</figcaption>
         </figure>
     </div>
-  <script>
-    const sections = document.querySelectorAll("section");
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("show");
-        }
-      });
-    });
-    sections.forEach(sec => observer.observe(sec));
-  </script>
+    <script>
+        const sections = document.querySelectorAll("section");
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("show");
+                }
+            });
+        });
+        sections.forEach(sec => observer.observe(sec));
+    </script>
 </body>
+
 </html>
