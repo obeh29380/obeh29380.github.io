@@ -1,5 +1,5 @@
 body {
-  background-color: ivory; /* 全体の背景色をアイボリーに */
+  background-color: ivory;
   margin: 0;
   font-family: sans-serif;
 }
@@ -19,18 +19,26 @@ body {
   }
 }
 
+
 .catimg {
   width: 400px;
   height: auto;
   display: block;
   margin: 0 auto;
   border-radius: 12px;
+  transition-duration: 0.3s;
 }
 
-.img.scale:hover {
+.catimg:hover {
   box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.2);
-  transform: scale(0.9);
-  transition-duration: 0.3s;
+  transform: scale(1.1);
+}
+.catimg::before {
+  position: absolute;
+  transition: all .5s ease-out;
+}
+.catimg:hover::before {
+  transform: scale(1.0);
 }
 
 .container {
@@ -47,9 +55,62 @@ body {
   align-items: center;
   text-align: center;
 }
-.figcaption {
+figcaption {
   text-align: center;
   align-items: center;
   font-size: 1.2em;
   color: #333;
+}
+
+
+/*   開いた状態のダイアログ  */
+dialog[open] {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+/*   閉じた状態のダイアログ   */
+dialog {
+  opacity: 0;
+  transform: scaleY(0);
+  transition:
+    opacity 0.7s ease-out,
+    transform 0.7s ease-out,
+    overlay 0.7s ease-out allow-discrete,
+    display 0.7s ease-out allow-discrete;
+  /* transition: all 0.7s allow-discrete;
+  と等しい*/
+}
+
+/*   開く前の状態  */
+/* 詳細度が同じであるため、前の dialog[open] ルールの後に置かなければ効果がありません */
+@starting-style {
+  dialog[open] {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+}
+
+/* ダイアログがモーダルで最上位に来た場合に :backdrop をトランジションする */
+dialog::backdrop {
+  background-color: rgb(0 0 0 / 0%);
+  transition:
+    display 0.7s allow-discrete,
+    overlay 0.7s allow-discrete,
+    background-color 0.7s;
+  /* transition: all 0.7s allow-discrete;
+  と等しい */
+}
+
+dialog[open]::backdrop {
+  background-color: rgb(0 0 0 / 25%);
+}
+
+/* この開始スタイル設定ルールは、上記のセレクター内にネストすることができません。
+入れ子セレクターは擬似要素を表すことができないからです。 */
+
+@starting-style {
+  dialog[open]::backdrop {
+    background-color: rgb(0 0 0 / 0%);
+  }
 }
