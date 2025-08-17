@@ -22,15 +22,14 @@
         </div>
     </div>
     <dialog>
-        <iframe width="392" height="697"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen
-                >
+        <iframe width="392" height="697" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
         </iframe>
         <button autofocus>閉じる</button>
     </dialog>
 
-    <script>
+    <script type="module">
         const sections = document.querySelectorAll("section");
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
@@ -56,20 +55,23 @@
                 birthday: new Date(2022, 8, 1) // 2022年9月1日
             }
         };
-        const catFigcaption = document.querySelectorAll("figcaption");
-        catFigcaption.forEach((figcaption, index) => {
-            const cat = cats[figcaption.closest("figure").getAttribute("name")];
 
-            const birthday = cat.birthday.toLocaleDateString("ja-JP", {
-                year: "numeric",
-                month: "long",
-                day: "numeric"
+        window.addEventListener("load", () => {
+            const catFigcaption = document.querySelectorAll("figcaption");
+            catFigcaption.forEach((figcaption, index) => {
+                const cat = cats[figcaption.closest("figure").getAttribute("name")];
+
+                const birthday = cat.birthday.toLocaleDateString("ja-JP", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
+                });
+                const today = new Date();
+                const age = today.getFullYear() - cat.birthday.getFullYear();
+                figcaption.innerHTML = `<h2>${cat.name}(${age})<br>${birthday}生</h2>`;
             });
-            const today = new Date();
-            const age = today.getFullYear() - cat.birthday.getFullYear();
-            figcaption.innerHTML = `<h2>${cat.name}(${age})<br>${birthday}生</h2>`;
         });
-        
+
         showModal.forEach(img => {
             img.addEventListener("click", (e) => {
                 switch (e.target.closest("figure").getAttribute("name")) {
